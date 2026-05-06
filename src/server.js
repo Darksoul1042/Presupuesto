@@ -4,7 +4,17 @@ import prisma from "./lib/prisma.js";
 import { closeRedis } from "./lib/redis.js";
 
 const server = app.listen(env.PORT, () => {
-  console.log(`Presupuesto API listening on port ${env.PORT}`);
+  console.log(`Presupuesto app listening at http://localhost:${env.PORT}`);
+});
+
+server.on("error", (error) => {
+  if (error.code === "EADDRINUSE") {
+    console.error(`Port ${env.PORT} is already in use. Open http://localhost:${env.PORT} or stop the existing process.`);
+    process.exit(1);
+  }
+
+  console.error(error);
+  process.exit(1);
 });
 
 async function shutdown(signal) {

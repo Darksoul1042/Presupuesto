@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Alloca Presupuesto</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <script defer src="/app.js"></script>
+  </head>
+  <body>
+    <main class="shell">
+      <header class="topbar">
+        <div class="brand-icon" aria-hidden="true">A</div>
+        <div>
+          <h1>Alloca</h1>
+          <p>Presupuestos. Control. Resultados.</p>
+        </div>
+        <button id="refreshButton" class="icon-button" type="button" title="Actualizar">Actualizar</button>
+      </header>
+
+      <section class="controls" aria-label="Controles de presupuesto">
+        <label>
+          Departamento
+          <select id="departmentSelect">
+            <option value="">Cargando...</option>
+          </select>
+        </label>
+        <label>
+          Anio
+          <input id="yearInput" type="number" min="2020" max="2035" value="2026" />
+        </label>
+        <form id="departmentForm" class="inline-form">
+          <input id="departmentName" placeholder="Nuevo departamento" required />
+          <button type="submit">Crear</button>
+        </form>
+      </section>
+
+      <section id="message" class="message" hidden></section>
+
+      <section class="metrics" aria-label="Metricas principales">
+        <article>
+          <span>Inicial</span>
+          <strong id="initialTotal">$0.00</strong>
+        </article>
+        <article class="accent">
+          <span>Disponible</span>
+          <strong id="availableTotal">$0.00</strong>
+        </article>
+        <article>
+          <span>Gastos</span>
+          <strong id="expenseTotal">$0.00</strong>
+        </article>
+        <article>
+          <span>Transferencias netas</span>
+          <strong id="transferNet">$0.00</strong>
+        </article>
+      </section>
+
+      <section class="layout">
+        <section class="panel">
+          <div class="section-title">
+            <div>
+              <h2 id="summaryTitle">Resumen mensual</h2>
+              <p id="summarySubtitle">Selecciona un departamento para ver datos.</p>
+            </div>
+          </div>
+          <div id="chart" class="chart" aria-label="Grafico mensual"></div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Mes</th>
+                  <th>Inicial</th>
+                  <th>Gastos</th>
+                  <th>Enviado</th>
+                  <th>Recibido</th>
+                  <th>Disponible</th>
+                </tr>
+              </thead>
+              <tbody id="summaryRows">
+                <tr>
+                  <td colspan="6">Cargando resumen...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <aside class="forms">
+          <form id="budgetForm" class="card-form">
+            <h3>Presupuesto mensual</h3>
+            <label>
+              Mes
+              <select id="budgetMonth"></select>
+            </label>
+            <label>
+              Monto
+              <input id="budgetAmount" type="number" min="0.01" step="0.01" placeholder="0.00" required />
+            </label>
+            <button type="submit">Guardar presupuesto</button>
+          </form>
+
+          <form id="expenseForm" class="card-form">
+            <h3>Registrar gasto</h3>
+            <label>
+              Mes
+              <select id="expenseMonth"></select>
+            </label>
+            <label>
+              Monto
+              <input id="expenseAmount" type="number" min="0.01" step="0.01" placeholder="0.00" required />
+            </label>
+            <input id="expenseDescription" placeholder="Descripcion" required />
+            <button type="submit">Registrar gasto</button>
+          </form>
+
+          <form id="transferForm" class="card-form">
+            <h3>Transferir entre meses</h3>
+            <div class="split">
+              <label>
+                Desde
+                <select id="transferFromMonth"></select>
+              </label>
+              <label>
+                Hacia
+                <select id="transferToMonth"></select>
+              </label>
+            </div>
+            <label>
+              Monto
+              <input id="transferAmount" type="number" min="0.01" step="0.01" placeholder="0.00" required />
+            </label>
+            <input id="transferDescription" placeholder="Descripcion" required />
+            <button type="submit">Transferir</button>
+          </form>
+        </aside>
+      </section>
+
+      <section class="panel movements">
+        <div class="section-title">
+          <div>
+            <h2>Movimientos</h2>
+            <p id="transactionCount">0 registros cargados</p>
+          </div>
+          <button id="loadMoreButton" type="button" class="secondary" hidden>Cargar mas</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Tipo</th>
+                <th>Periodo</th>
+                <th>Descripcion</th>
+                <th>Monto</th>
+              </tr>
+            </thead>
+            <tbody id="transactionRows">
+              <tr>
+                <td colspan="4">Cargando movimientos...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

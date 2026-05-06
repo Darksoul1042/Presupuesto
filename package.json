@@ -15,8 +15,9 @@
     "demo:generate": "prisma generate --schema prisma/schema.sqlite.prisma",
     "demo:push": "node prisma/seed/demoInit.js",
     "demo:seed": "node prisma/seed/demoSeed.js",
-    "dev:frontend": "npm --prefix frontend run dev",
-    "build:frontend": "npm --prefix frontend run build"
+    "demo:stop": "node scripts/stopPorts.js 4000 5173",
+    "demo:prepare": "npm run demo:stop && npm run demo:generate && npm run demo:push && npm run demo:seed",
+    "demo:start": "npm run demo:prepare && npm start"
   },
   "dependencies": {
     "@prisma/client": "^5.22.0",
