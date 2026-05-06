@@ -22,20 +22,16 @@ npm install
 npm run demo:generate
 npm run demo:push
 npm run demo:seed
+npm run build:frontend
 npm run dev:api
-```
-
-En otra terminal:
-
-```bash
-npm --prefix frontend install
-npm run dev:frontend
 ```
 
 Abre:
 
-- Frontend: `http://localhost:5173`
+- App completa: `http://localhost:4000`
 - API health: `http://localhost:4000/health`
+
+Si quieres desarrollar el frontend con Vite, puedes usar `npm run dev:frontend` y abrir `http://localhost:5173`, pero el modo recomendado en Windows es servir el build desde Express para evitar errores `spawn EPERM` del dev server.
 
 ### Enterprise con PostgreSQL y Redis
 
