@@ -1,0 +1,39 @@
+{
+  "name": "presupuesto-backend-enterprise",
+  "version": "1.0.0",
+  "description": "Backend enterprise para gestion presupuestaria con Prisma, PostgreSQL y Redis.",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch src/server.js",
+    "dev:api": "node --watch src/server.js",
+    "start": "node src/server.js",
+    "test": "vitest run",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:validate": "prisma validate",
+    "demo:generate": "prisma generate --schema prisma/schema.sqlite.prisma",
+    "demo:push": "node prisma/seed/demoInit.js",
+    "demo:seed": "node prisma/seed/demoSeed.js",
+    "dev:frontend": "npm --prefix frontend run dev",
+    "build:frontend": "npm --prefix frontend run build"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.22.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "helmet": "^8.0.0",
+    "morgan": "^1.10.0",
+    "redis": "^4.7.0",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "prisma": "^5.22.0",
+    "supertest": "^7.0.0",
+    "vitest": "^2.1.8"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

@@ -1,0 +1,63 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum TransactionType {
+  EXPENSE
+  TRANSFER
+}
+
+model Department {
+  id             Int             @id @default(autoincrement())
+  name           String          @unique
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  monthlyBudgets MonthlyBudget[]
+  transactions   Transaction[]
+
+  @@map("departments")
+}
+
+model MonthlyBudget {
+  id           Int        @id @default(autoincrement())
+  departmentId Int
+  department   Department @relation(fields: [departmentId], references: [id], onDelete: Cascade)
+  year         Int
+  month        Int
+  amount       Decimal    @db.Decimal(14, 2)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  @@unique([departmentId, year, month])
+  @@index([departmentId, year, month])
+  @@map("monthly_budgets")
+}
+
+model Transaction {
+  id           Int             @id @default(autoincrement())
+  departmentId Int
+  department   Department      @relation(fields: [departmentId], references: [id], onDelete: Cascade)
+  type         TransactionType
+  amount       Decimal         @db.Decimal(14, 2)
+  year         Int?
+  month        Int?
+  fromYear     Int?
+  fromMonth    Int?
+  toYear       Int?
+  toMonth      Int?
+  description  String?
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+
+  @@index([departmentId, year, month])
+  @@index([departmentId, type, year, month])
+  @@index([departmentId, type, fromYear, fromMonth])
+  @@index([departmentId, type, toYear, toMonth])
+  @@index([departmentId, createdAt])
+  @@map("transactions")
+}
